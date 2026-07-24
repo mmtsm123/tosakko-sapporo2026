@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>土佐っ子 札幌旅</title>
+<style>
+  :root{
+    --bg:#0d1b2a; --card:#ffffff; --ink:#1b263b; --sub:#5c6b82;
+    --accent:#2a9d8f; --accent2:#e76f51; --line:#e6ebf1; --soft:#f4f7fb;
+    --pink:#e5679a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    color:var(--ink); background:linear-gradient(180deg,#0d1b2a 0%,#1b3a4b 100%);
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:620px;margin:0 auto;padding:0 16px 60px}
+  header.hero{
+    text-align:center;color:#fff;padding:44px 16px 30px;
+  }
+  .hero .ey{font-size:13px;letter-spacing:.28em;color:#a8dadc;font-weight:600}
+  .hero h1{font-size:30px;font-weight:800;margin:10px 0 6px;line-height:1.3}
+  .hero .date{font-size:15px;color:#cfe3e6;font-weight:600}
+  .hero .live{
+    display:inline-block;margin-top:16px;background:var(--pink);color:#fff;
+    padding:7px 18px;border-radius:30px;font-size:13px;font-weight:700;
+    box-shadow:0 6px 18px rgba(229,103,154,.4)
+  }
+  .members{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  .members span{
+    background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);
+    padding:5px 13px;border-radius:20px;font-size:13px;font-weight:600
+  }
+  nav.tabs{
+    position:sticky;top:0;z-index:20;display:flex;gap:5px;justify-content:space-between;
+    padding:9px 12px;background:rgba(13,27,42,.94);backdrop-filter:blur(8px);
+    margin:0 -16px 4px;
+  }
+  nav.tabs a{
+    flex:1 1 0;text-align:center;color:#cfe3e6;text-decoration:none;font-size:12px;font-weight:700;
+    padding:7px 4px;border-radius:16px;border:1px solid rgba(255,255,255,.18);white-space:nowrap
+  }
+  nav.tabs a:active{background:var(--accent)}
+  .walica{
+    display:block;text-align:center;text-decoration:none;
+    background:linear-gradient(90deg,#f4a259,#e76f51);color:#fff;font-weight:700;font-size:14px;
+    padding:13px 16px;border-radius:14px;margin:10px 0 2px;
+    box-shadow:0 6px 18px rgba(231,111,81,.35)
+  }
+  section{margin-top:22px}
+  .sec-title{
+    color:#fff;font-size:16px;font-weight:800;margin-bottom:12px;
+    display:flex;align-items:center;gap:8px
+  }
+  .sec-title .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2)}
+  .card{
+    background:var(--card);border-radius:16px;padding:16px 16px;margin-bottom:12px;
+    box-shadow:0 8px 24px rgba(0,0,0,.18)
+  }
+  .day-badge{
+    display:inline-block;background:var(--accent);color:#fff;font-size:12px;font-weight:700;
+    padding:3px 12px;border-radius:20px;margin-bottom:10px
+  }
+  .item{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .item:first-of-type{border-top:none}
+  .time{flex:0 0 58px;font-weight:800;color:var(--accent);font-size:14px}
+  .body h3{font-size:15px;font-weight:700;margin-bottom:2px}
+  .body p{font-size:13px;color:var(--sub);margin:1px 0}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:12px;margin-bottom:4px}
+  .tag.eat{background:#fff2ec;color:var(--accent2)}
+  .tag.live{background:#fde7f0;color:var(--pink)}
+  .tag.move{background:#e8f5f3;color:var(--accent)}
+  .tag.free{background:#eef1f6;color:var(--sub)}
+  a.btn{
+    display:inline-block;margin-top:8px;margin-right:6px;font-size:12px;font-weight:700;
+    text-decoration:none;padding:6px 13px;border-radius:20px;border:1px solid var(--line);
+    color:var(--ink);background:var(--soft)
+  }
+  a.btn.map{background:#eaf4ff;color:#1d6fd0;border-color:#d3e6fb}
+  a.btn.web{background:#f0ecff;color:#6b46c1;border-color:#e0d8f7}
+  /* flights */
+  .flight{padding:12px 0;border-top:1px solid var(--line)}
+  .flight:first-child{border-top:none}
+  .flight .route{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+  .flight .arrow{color:var(--accent2)}
+  .flight .meta{font-size:12px;color:var(--sub);margin-top:3px}
+  .flight .who{margin-top:5px}
+  .who b{
+    display:inline-block;background:var(--soft);border:1px solid var(--line);
+    font-size:12px;font-weight:700;color:var(--ink);padding:2px 10px;border-radius:14px;margin:2px 4px 0 0
+  }
+  .grp-title{font-size:12px;font-weight:800;color:var(--sub);letter-spacing:.05em;margin-bottom:2px}
+  .hotel-name{font-size:17px;font-weight:800;margin-bottom:4px}
+  .kv{display:flex;font-size:13px;padding:4px 0}
+  .kv .k{flex:0 0 92px;color:var(--sub);font-weight:600}
+  .note{font-size:12px;color:var(--sub);text-align:center;margin-top:6px}
+  footer{text-align:center;color:#8fb0b6;font-size:12px;margin-top:36px}
+  .warn{font-size:12px;color:var(--accent2);font-weight:700;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="ey">HOKKAIDO TRIP</div>
+    <h1>土佐っ子 札幌旅</h1>
+    <div class="date">2026.7.25 (土) 〜 7.27 (月) ・ 2泊3日</div>
+  </header>
+
+  <nav class="tabs">
+    <a href="#schedule">📅 行程</a>
+    <a href="#flight">✈️ フライト</a>
+    <a href="#hotel">🏨 ホテル</a>
+    <a href="#live">🎤 ライブ</a>
+    <a href="#info">🎤 持ち物</a>
+  </nav>
+
+  <a class="walica" href="https://walica.jp/group/01KY81JBH7RJD470RDEYF2B2J2" target="_blank">💰 割り勘の入力・確認はこちら（Walica）</a>
+
+  <!-- 行程 -->
+  <section id="schedule">
+    <div class="sec-title"><span class="dot"></span>行程スケジュール</div>
+
+    <div class="card">
+      <span class="day-badge">DAY 1 ・ 7/25 (土)</span>
+      <div class="item">
+        <div class="time">午前</div>
+        <div class="body">
+          <span class="tag move">移動</span>
+          <h3>新千歳空港 到着</h3>
+          <p>JAL505 / NH53 で羽田より到着</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="time">昼</div>
+        <div class="body">
+          <span class="tag eat">昼食</span>
+          <h3>道の駅「サーモンパーク千歳」</h3>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&query=道の駅サーモンパーク千歳" target="_blank">🗺 地図</a>
+          <a class="btn web" href="https://www.salmonpark.com/" target="_blank">🌐 公式サイト</a>
+        </div>
+      </div>
+      <div class="item">
+        <div class="time">15:00</div>
+        <div class="body">
+          <span class="tag move">チェックイン</span>
+          <h3>ラ・ジェント・ステイ札幌大通</h3>
+          <a class="btn" href="#hotel">🏨 ホテル詳細</a>
+        </div>
+      </div>
+      <div class="item">
+        <div class="time">18:30</div>
+        <div class="body">
+          <span class="tag eat">夕食</span>
+          <h3>成吉思汗 大黒屋 札幌1号店</h3>
+          <a class="btn map" href="https://www.google.com/maps/search/?api=1&query=成吉思汗大黒屋+札幌1号店+南4条西2丁目10-6" target="_blank">🗺 地図</a>
+          <a class="btn" href="tel:0112111429">📞 電話</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="day-badge">DAY 2 ・ 7/26 (日) 🎤 ライブDAY</span>
+      <div class="item">
+        <div class="time">午前</div>
+        <div class="body">
+          <span class="tag free">自由</span>
+          <h3>会場へ移動・準備</h3>
+        </div>
+      </div>
+      <div class="item">
+        <div class="time">13:00</div>
+        <div class="body">
+          <span class="tag live">LIVE</span>
+          <h3>timelesz LIVE 開演</h3>
+          <p>We're timelesz LIVE TOUR 2026 episode 2 MOMENTUM</p>
+          <a class="btn" href="#live">🎤 ライブ詳細</a>
+        </div>
+      </div>
+      <div class="item">
+        <div class="time">夕</div>
+        <div class="body">
+          <span class="tag move">移動</span>
+          <h3>沙菜子 → 東京へ</h3>
+        </div>
+      </div>
+      <div class="item">
+        <div class="time">夜</div>
+        <div class="body">
+          <span class="tag free">自由</span>
+          <h3>夕食・自由時間</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="day-badge">DAY 3 ・ 7/27 (月)</span>
+      <div class="item">
+        <div class="time">11:00</div>
+        <div class="body">
+          <span class="tag move">チェックアウト</span>
+          <h3>ラ・ジェント・ステイ札幌大通</h3>
+          <p>チェックアウト後、各自の便に合わせて行動</p>
+        </div>
+      </div>
+      <div class="item">
+        <div class="time">日中</div>
+        <div class="body">
+          <span class="tag free">自由</span>
+          <h3>自由行動 → 帰路</h3>
+          <p>真実は午前便、麻菜は夕方便、美来・由佳は夜便（フライト参照）</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- フライト -->
+  <section id="flight">
+    <div class="sec-title"><span class="dot"></span>フライト情報</div>
+
+    <div class="card">
+      <div class="grp-title">往路 ・ 7/25 (土) ｜ 羽田 → 新千歳</div>
+      <div class="flight">
+        <div class="route">JAL 505</div>
+        <div class="meta">08:20 発 → 09:55 着</div>
+        <div class="who"><b>真実</b><b>由佳</b><b>沙菜子</b></div>
+      </div>
+      <div class="flight">
+        <div class="route">NH 53</div>
+        <div class="meta">08:00 発 → 09:35 着</div>
+        <div class="who"><b>美来</b><b>麻菜</b></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="grp-title">復路 ｜ 新千歳 → 羽田</div>
+      <div class="flight">
+        <div class="meta">7/26 (日) ・ この日に東京へ</div>
+        <div class="who"><b>沙菜子</b></div>
+      </div>
+      <div class="flight">
+        <div class="route">JAL 502</div>
+        <div class="meta">7/27 (月) ・ 08:50 発 → 10:25 着</div>
+        <div class="who"><b>真実</b></div>
+      </div>
+      <div class="flight">
+        <div class="route">NH 74</div>
+        <div class="meta">7/27 (月) ・ 17:25 発 → 19:05 着</div>
+        <div class="who"><b>麻菜</b></div>
+      </div>
+      <div class="flight">
+        <div class="route">NH 4738</div>
+        <div class="meta">7/27 (月) ・ 21:00 発 → 22:40 着</div>
+        <div class="who"><b>美来</b></div>
+      </div>
+      <div class="flight">
+        <div class="route">JAL 528</div>
+        <div class="meta">7/27 (月) ・ 21:10 発 → 22:55 着</div>
+        <div class="who"><b>由佳</b></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="grp-title">⏰ 国内線 締切の目安（JAL / ANA 共通）</div>
+      <div class="kv"><span class="k">搭乗手続</span><span>出発 20分前まで（自動チェックイン・手荷物預け）</span></div>
+      <div class="kv"><span class="k">保安検査</span><span>出発 15〜20分前までに通過</span></div>
+      <div class="kv"><span class="k">搭乗口</span><span>出発 10分前までに到着</span></div>
+      <p class="note">※ 混雑時は前倒しに。手荷物を預ける場合は余裕をもって空港へ</p>
+    </div>
+  </section>
+
+  <!-- ホテル -->
+  <section id="hotel">
+    <div class="sec-title"><span class="dot"></span>ホテル</div>
+    <div class="card">
+      <div class="hotel-name">ラ・ジェント・ステイ札幌大通</div>
+      <div class="kv"><span class="k">チェックイン</span><span>15:00</span></div>
+      <div class="kv"><span class="k">チェックアウト</span><span>11:00</span></div>
+      <div class="kv"><span class="k">住所</span><span>〒060-0062 札幌市中央区南2条西5丁目26-5</span></div>
+      <div class="kv"><span class="k">TEL</span><span>011-200-5507</span></div>
+      <div style="margin-top:10px">
+        <a class="btn map" href="https://www.google.com/maps/search/?api=1&query=ラジェントステイ札幌大通" target="_blank">🗺 地図</a>
+        <a class="btn web" href="https://lagent.jp/sapporo-odori/" target="_blank">🌐 公式サイト</a>
+        <a class="btn" href="tel:0112005507">📞 電話</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ライブ -->
+  <section id="live">
+    <div class="sec-title"><span class="dot"></span>ライブ 🎤</div>
+    <div class="card">
+      <span class="tag live">7/26 (日) 開演 13:00</span>
+      <div class="hotel-name" style="margin-top:6px">timelesz</div>
+      <div class="kv"><span class="k">ツアー</span><span>We're timelesz LIVE TOUR 2026 episode 2 MOMENTUM</span></div>
+      <div class="kv"><span class="k">会場</span><span>真駒内セキスイハイムアイスアリーナ</span></div>
+      <div class="kv"><span class="k">住所</span><span>〒005-0017 札幌市南区真駒内公園1-1</span></div>
+      <div class="kv"><span class="k">開演</span><span>13:00</span></div>
+      <div style="margin-top:10px">
+        <a class="btn map" href="https://www.google.com/maps/search/?api=1&query=真駒内セキスイハイムアイスアリーナ" target="_blank">🗺 地図</a>
+        <a class="btn web" href="https://starto.jp/s/p/live/10431?tab=schedule" target="_blank">🌐 公演スケジュール</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- メモ -->
+  <section id="info">
+    <div class="sec-title"><span class="dot"></span>ライブ持ち物</div>
+    <div class="card">
+      <p style="font-size:13px;color:var(--ink)">
+        ・FC会員証（FCのログイン画面提示でも可らしい）<br>
+        ・スマホ<br>
+        ・身分証<br>
+        ・うちわ<br>
+        ・ぬい（自担とサブ担）<br>
+        ・ペンラ<br>
+        ・アクスタ<br>
+        ・双眼鏡
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    土佐っ子 札幌旅
+  </footer>
+
+</div>
+</body>
+</html>
